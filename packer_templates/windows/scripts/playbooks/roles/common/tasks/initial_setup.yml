@@ -1,0 +1,41 @@
+---
+- hosts: all
+
+  tasks:
+    - name: Disable System Restore, Windows Update, Screesaver and UAC
+      win_regedit:
+        path: "{{ item.path }}"
+        name: "{{ item.name }}"
+        data: "{{ item.data }}"
+        type: "{{ item.type }}"
+
+      with_items:
+        - path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore
+          name: DisableSR
+          data: 0
+          type: dword
+        - path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\WindowsUpdate\AU
+          name: AUOptions
+          data: 1
+          type: dword
+        - path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\WindowsUpdate\AU
+          name: NoAutoUpdate
+          data: 1
+          type: dword
+        - path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system
+          name: EnableLUA
+          data: 0
+          type: dword
+        - path: HKCU:\Control Panel\Desktop
+          name: ScreenSaveActive
+          data: 0
+          type: dword
+
+    - name: Settings Power to High Performance
+      win_shell: "powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
+    - name: Disabling Hibernation
+      win_shell: "powercfg.exe /hibernate off"
+    - name: Disabling monitor timeout on AC power
+      win_shell: "powercfg -Change -monitor-timeout-ac 0"
+    - name: Disabling monitor timeout on DC power
+      win_shell: "powercfg -Change -monitor-timeout-dc 0"

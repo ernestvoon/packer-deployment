@@ -1,0 +1,9 @@
+---
+- hosts: all
+  vars:
+    ansible_user: vagrant
+    ansible_password: vagrant
+    ansible_port: 5985
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_operation_timeout_sec: 30
