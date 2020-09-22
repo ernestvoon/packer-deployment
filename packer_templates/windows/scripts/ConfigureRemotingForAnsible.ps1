@@ -56,7 +56,7 @@
 [CmdletBinding()]
 
 Param (
-    [string]$SubjectName = $env:DC1,
+    [string]$SubjectName = $env:COMPUTERNAME,
     [int]$CertValidityDays = 1095,
     [switch]$SkipNetworkProfileCheck,
     $CreateSelfSignedCert = $true,

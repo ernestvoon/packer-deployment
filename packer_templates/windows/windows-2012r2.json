@@ -6,7 +6,7 @@
       "vm_name": "{{ user `template` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}"
+        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}", "./scripts"
       ],
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -19,6 +19,8 @@
       "type": "hyperv-iso",
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
       "winrm_username": "vagrant"
     },
     {
@@ -27,7 +29,7 @@
       "vm_name": "{{ user `template` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}"
+        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}", "./scripts"
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
@@ -59,6 +61,8 @@
       ],
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
       "winrm_username": "vagrant"
     },
     {
@@ -89,6 +93,8 @@
       "type": "parallels-iso",
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
       "winrm_username": "vagrant"
     },
     {
@@ -98,7 +104,7 @@
       "disk_adapter_type": "lsisas1068",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}"
+        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}", "./scripts"
       ],
       "guest_os_type": "windows9srv-64",
       "headless": "{{ user `headless` }}",
@@ -114,6 +120,8 @@
       "version": 11,
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
       "winrm_username": "vagrant"
     },
     {
@@ -121,7 +129,7 @@
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}"
+        "{{ user `floppy_dir` }}/{{ user `unattended_file_path` }}", "./scripts"
       ],
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -151,6 +159,8 @@
       "type": "qemu",
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
       "winrm_username": "vagrant"
     }
   ],
@@ -166,53 +176,18 @@
   ],
   "provisioners": [
     {
-      "cookbook_paths": [
-        "./scripts/cookbooks"
-      ],
-      "guest_os_type": "windows",
-      "run_list": [
-        "packer::disable_uac",
-        "packer::disable_restore",
-        "packer::disable_windows_update",
-        "packer::remove_defender",
-        "packer::configure_power",
-        "packer::disable_screensaver"
-      ],
-      "type": "chef-solo"
+      "type": "powershell",
+      "script": ".scripts/ConfigureRemotingForAnsible.ps1"
     },
     {
       "type": "ansible",
-      "playbook_file": 
-    }
-    {
-      "type": "windows-restart"
-    },
-    {
-      "cookbook_paths": [
-        "./scripts/cookbooks"
-      ],
-      "guest_os_type": "windows",
-      "run_list": [
-        "packer::vm_tools",
-        "packer::features",
-        "packer::enable_file_sharing",
-        "packer::enable_remote_desktop",
-        "packer::ui_tweaks"
-      ],
-      "type": "chef-solo"
+      "user": "vagrant",
+      "use_proxy": false,
+      "playbook_file": "./scripts/playbooks/roles/common/tasks/initial_setup.yml",
+      "extra_arguments": [ "-vvvv" ]
     },
     {
       "type": "windows-restart"
-    },
-    {
-      "cookbook_paths": [
-        "./scripts/cookbooks"
-      ],
-      "guest_os_type": "windows",
-      "run_list": [
-        "packer::cleanup"
-      ],
-      "type": "chef-solo"
     },
     {
       "elevated_password": "vagrant",
@@ -223,7 +198,7 @@
   ],
   "variables": {
     "build_directory": "../../builds",
-    "cpus": "4",
+    "cpus": "5",
     "disk_size": "30000",
     "floppy_dir": "./",
     "guest_additions_mode": "attach",
@@ -232,7 +207,7 @@
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "./9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
-    "memory": "8192",
+    "memory": "4096",
     "template": "windows-2012r2-standard",
     "unattended_file_path": "answer_files/2012_r2/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"
