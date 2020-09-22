@@ -287,7 +287,7 @@
               <Description>Disable Hibernation Mode</Description>
           </SynchronousCommand>
           <SynchronousCommand wcm:action="add">
-              <CommandLine>cmd.exe /c powershell -File A:\scripts\configure-winrm.ps1</CommandLine>
+              <CommandLine>cmd.exe /c powershell -File A:\ConfigureRemotingForAnsible.ps1</CommandLine>
               <Order>20</Order>
               <Description>winrm configure https</Description>
           </SynchronousCommand>
