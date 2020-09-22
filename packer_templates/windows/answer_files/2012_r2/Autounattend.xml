@@ -188,7 +188,7 @@
             <Order>2</Order>
             <RequiresUserInput>true</RequiresUserInput>
         </SynchronousCommand>
-        <SynchronousCommand wcm:action="add">
+        <!-- <SynchronousCommand wcm:action="add">
               <CommandLine>cmd.exe /c winrm quickconfig -q</CommandLine>
               <Description>winrm quickconfig -q</Description>
               <Order>3</Order>
@@ -265,7 +265,7 @@
               <Description>Start Win RM Service</Description>
               <Order>15</Order>
               <RequiresUserInput>true</RequiresUserInput>
-          </SynchronousCommand>
+          </SynchronousCommand> -->
           <SynchronousCommand wcm:action="add">
               <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
               <Order>16</Order>
@@ -285,6 +285,11 @@
               <CommandLine>%SystemRoot%\System32\reg.exe ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\ /v HibernateEnabled /t REG_DWORD /d 0 /f</CommandLine>
               <Order>19</Order>
               <Description>Disable Hibernation Mode</Description>
+          </SynchronousCommand>
+          <SynchronousCommand wcm:action="add">
+              <CommandLine>cmd.exe /c powershell -File A:\scripts\configure-winrm.ps1</CommandLine>
+              <Order>20</Order>
+              <Description>winrm configure https</Description>
           </SynchronousCommand>
       </FirstLogonCommands>
     </component>

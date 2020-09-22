@@ -183,8 +183,9 @@
       "type": "ansible",
       "user": "vagrant",
       "use_proxy": false,
+      "command": "ansible_winrm_server_cert_validation: ignore",
       "playbook_file": "./playbooks/roles/common/tasks/initial_setup.yml",
-      "extra_arguments": [ "-vvvv" ]
+      "extra_arguments": [ "-vvvv", "ansible_winrm_server_cert_validation: ignore" ]
     },
     {
       "type": "windows-restart"
