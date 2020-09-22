@@ -188,14 +188,14 @@
             <Order>2</Order>
             <RequiresUserInput>true</RequiresUserInput>
         </SynchronousCommand>
-        <!-- <SynchronousCommand wcm:action="add">
+        <SynchronousCommand wcm:action="add">
               <CommandLine>cmd.exe /c winrm quickconfig -q</CommandLine>
               <Description>winrm quickconfig -q</Description>
               <Order>3</Order>
               <RequiresUserInput>true</RequiresUserInput>
           </SynchronousCommand>
           <SynchronousCommand wcm:action="add">
-              <CommandLine>cmd.exe /c winrm quickconfig -transport:https</CommandLine>
+              <CommandLine>cmd.exe /c winrm quickconfig -transport:http</CommandLine>
               <Description>winrm quickconfig -transport:http</Description>
               <Order>4</Order>
               <RequiresUserInput>true</RequiresUserInput>
@@ -264,7 +264,7 @@
               <CommandLine>cmd.exe /c net start winrm</CommandLine>
               <Description>Start Win RM Service</Description>
               <Order>15</Order>
-              <RequiresUserInput>true</RequiresUserInput> -->
+              <RequiresUserInput>true</RequiresUserInput>
           </SynchronousCommand>
           <SynchronousCommand wcm:action="add">
               <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
