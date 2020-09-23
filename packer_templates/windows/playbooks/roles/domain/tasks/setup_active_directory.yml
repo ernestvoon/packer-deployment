@@ -1,0 +1,21 @@
+---
+  - name: Setup new Active-Directory Domain & Forest
+    hosts: all
+    vars:
+      dc_address: 10.242.43.253
+      dc_netmask_cidr: 24
+      dc_gateway: 10.242.43.254
+    tasks:
+      - name: Set static IP address
+        win_shell: "(new-netipaddress -InterfaceAlias Ethernet0 -IPAddress {{ dc_address }} -prefixlength {{dc_netmask_cidr}} -defaultgateway {{ dc_gateway }})"
+        ignore_errors: True 
+      - name: Disable firewall for Domain, Public and Private profiles
+        win_firewall:
+          state: disabled
+          profiles:
+          - Domain
+          - Private
+          - Public
+        tags: disable_firewall
+        delegate_to: '{{ dc_address }}'
+    
