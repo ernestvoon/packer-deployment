@@ -13,7 +13,7 @@
         ignore_errors: True
       - name: Change ansible's ip address for each host
         set_fact:
-        ansible_host: "{{ dc_address }}"
+          ansible_host: "{{ dc_address }}"
       - name: Wait for the hosts network interface to come back up
         local_action:
           module: wait_for
