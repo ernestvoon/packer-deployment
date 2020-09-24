@@ -7,8 +7,21 @@
       dc_gateway: 10.242.43.254
     tasks:
       - name: Set static IP address
-        win_shell: "(new-netipaddress -InterfaceAlias Ethernet0 -IPAddress {{ dc_address }} -prefixlength {{dc_netmask_cidr}} -defaultgateway {{ dc_gateway }})"
-        ignore_errors: True 
+        win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress {{ dc_address }} -PrefixLength {{ dc_netmask_cidr }} -DefaultGateway {{ dc_gateway }}"
+        async: 100
+        poll: 0
+        ignore_errors: True
+      - name: Change ansible's ip address for each host
+        set_fact:
+        ansible_host: "{{ dc_address }}"
+      - name: Wait for the hosts network interface to come back up
+        local_action:
+          module: wait_for
+          host: "{{ dc_address }}"
+          port: 5986
+          delay: 10
+          state: started
+        register: wait_result
       - name: Disable firewall for Domain, Public and Private profiles
         win_firewall:
           state: disabled
