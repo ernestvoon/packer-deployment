@@ -8,8 +8,12 @@
     tasks:
       - name: Set static IP address
         win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress {{ dc_address }} -PrefixLength {{ dc_netmask_cidr }} -DefaultGateway {{ dc_gateway }}"
-        async: 100
-        poll: 0
-        ignore_errors: True
+      - name: Disable firewall for Domain, Public and Private profiles
+        win_firewall:
+        state: disabled
+        profiles:
+          - Domain
+          - Private
+          - Public
       
     
