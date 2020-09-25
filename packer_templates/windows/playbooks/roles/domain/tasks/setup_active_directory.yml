@@ -11,14 +11,15 @@
         async: 100
         poll: 0
         ignore_errors: True
-      - name: Change ansible's ip address for each host
-        set_fact:
-          ansible_host: "{{ dc_address }}"
+      - name: Add host to Ansible inventory with new Password
+        add_host:
+          name: "{{ dc_address }}"
+          ansible_connection: winrm
+          ansible_winrm_server_cert_validation: ignore
       - name: Wait for the hosts network interface to come back up
         local_action:
           module: wait_for
           host: "{{ dc_address }}"
-          port: 5986
           delay: 10
           state: started
         register: wait_result
