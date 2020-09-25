@@ -16,13 +16,9 @@
           name: "{{ dc_address }}"
           ansible_connection: winrm
           ansible_winrm_server_cert_validation: ignore
-      - name: Wait for the hosts network interface to come back up
-        local_action:
-          module: wait_for
-          host: "{{ dc_address }}"
-          delay: 10
-          state: started
-        register: wait_result
+      - name: Wait for system to become reachable over WinRM
+        wait_for_connection:
+          timeout: 900
       - name: Disable firewall for Domain, Public and Private profiles
         win_firewall:
           state: disabled
