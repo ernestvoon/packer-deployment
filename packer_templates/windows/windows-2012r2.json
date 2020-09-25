@@ -209,15 +209,6 @@
       "type": "windows-restart"
     },
     {
-      "type": "ansible",
-      "use_proxy": false,
-      "playbook_file": "./playbooks/roles/domain/tasks/install_active_directory.yml",
-      "extra_arguments": [
-        "--connection", "winrm", "-vvvv", 
-        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=vagrant ansible_password=vagrant become_method=runas become_user=Administrator become_password=vagrant" 
-       ]
-    },
-    {
       "elevated_password": "vagrant",
       "elevated_user": "vagrant",
       "script": "./scripts/cleanup.ps1",

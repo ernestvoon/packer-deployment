@@ -1,6 +1,7 @@
 ---
-  - name: Setup new Active-Directory Domain & Forest
     hosts: 10.242.43.253
+    tasks:
+  - name: Setup new Active-Directory Domain & Forest
     vars:
       domain_name: 'starkindustries.marvel.com'
       local_admin: '.\administrator'
