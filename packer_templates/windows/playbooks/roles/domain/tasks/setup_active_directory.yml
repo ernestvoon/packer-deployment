@@ -11,23 +11,5 @@
         async: 100
         poll: 0
         ignore_errors: True
-      - name: Add host to Ansible inventory with new Password
-        add_host:
-          name: "{{ dc_address }}"
-          ansible_connection: winrm
-          ansible_winrm_server_cert_validation: ignore
-      - name: Wait for system to become reachable over WinRM
-        wait_for:
-          host: "{{ dc_address }}"
-          timeout: 900
-          delay: 0
-      - name: Disable firewall for Domain, Public and Private profiles
-        win_firewall:
-          state: disabled
-          profiles:
-          - Domain
-          - Private
-          - Public
-        tags: disable_firewall
-        delegate_to: '{{ dc_address }}'
+      
     

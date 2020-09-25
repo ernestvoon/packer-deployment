@@ -1,0 +1,9 @@
+---
+  - name: Disable firewall for Domain, Public and Private profiles
+    hosts: 10.242.43.253
+    win_firewall:
+      state: disabled
+      profiles:
+        - Domain
+        - Private
+        - Public
