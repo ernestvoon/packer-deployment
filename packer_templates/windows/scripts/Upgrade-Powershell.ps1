@@ -287,25 +287,6 @@ switch ($version) {
     }
 }
 
-# detect if .NET 4.5.2 is not installed and add to the actions
-$dotnet_path = "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full"
-if (-not (Test-Path -Path $dotnet_path)) {
-    $dotnet_upgrade_needed = $true
-} else {
-    $dotnet_version = Get-ItemProperty -Path $dotnet_path -Name Release -ErrorAction SilentlyContinue
-    if ($dotnet_version) {
-        # 379893 == 4.5.2
-        if ($dotnet_version.Release -lt 379893) {
-            $dotnet_upgrade_needed = $true
-        }        
-    } else {
-        $dotnet_upgrade_needed = $true
-    }
-}
-if ($dotnet_upgrade_needed) {
-    $actions = @("dotnet") + $actions
-}
-
 Write-Log -message "The following actions will be performed: $($actions -join ", ")"
 foreach ($action in $actions) {
     $url = $null
@@ -313,13 +294,6 @@ foreach ($action in $actions) {
     $arguments = "/quiet /norestart"
 
     switch ($action) {
-        "dotnet" {
-            Write-Log -message "running .NET update to 4.5.2"
-            $url = "https://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe"
-            $error_msg = "failed to update .NET to 4.5.2"
-            $arguments = "/q /norestart"
-            break
-        }
         "remove-3.0" {
             # this is only run before a 5.1 install on Windows 7/2008 R2, the
             # install zip needs to be downloaded and extracted before
