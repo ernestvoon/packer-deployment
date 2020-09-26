@@ -176,6 +176,10 @@
   ],
   "provisioners": [
     {
+      "type": "powershell",
+      "script": "./scripts/Upgrade-Powershell.ps1"
+    },
+    {
       "type": "ansible",
       "use_proxy": false,
       "playbook_file": "./playbooks/roles/common/tasks/initial_setup.yml",

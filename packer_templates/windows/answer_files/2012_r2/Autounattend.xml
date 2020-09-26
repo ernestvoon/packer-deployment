@@ -209,13 +209,8 @@
               <Description>Disable Hibernation Mode</Description>
           </SynchronousCommand>
           <SynchronousCommand wcm:action="add">
-              <CommandLine>cmd.exe /c powershell -File A:\upgrade_to_ps5.ps1</CommandLine>
-              <Order>7</Order>
-              <Description>winrm configure https</Description>
-          </SynchronousCommand>
-          <SynchronousCommand wcm:action="add">
               <CommandLine>cmd.exe /c powershell -File A:\ConfigureRemotingForAnsible.ps1</CommandLine>
-              <Order>8</Order>
+              <Order>7</Order>
               <Description>winrm configure https</Description>
           </SynchronousCommand>
       </FirstLogonCommands>
