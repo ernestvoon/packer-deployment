@@ -6,8 +6,11 @@
       dc_netmask_cidr: 24
       dc_gateway: 10.242.43.254
     tasks:
-      - name: Set static IP address
-        win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress {{ dc_address }} -PrefixLength {{ dc_netmask_cidr }} -DefaultGateway {{ dc_gateway }}"
+      - name: Set internal DNS server 
+        win_dns_client:
+          adapter_names: '*'
+          ipv4_addresses:
+            - '127.0.0.1'
       - name: Disable firewall for Domain, Public and Private profiles
         win_firewall:
           state: disabled
@@ -15,5 +18,6 @@
             - Domain
             - Private
             - Public
-      
-    
+      - name: Set static IP address
+        win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress {{ dc_address }} -PrefixLength {{ dc_netmask_cidr }} -DefaultGateway {{ dc_gateway }}"
+        ignore_errors: True

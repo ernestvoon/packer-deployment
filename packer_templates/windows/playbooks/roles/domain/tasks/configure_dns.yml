@@ -1,10 +1,9 @@
 ---
-    hosts: 10.242.43.253
     tasks:
     - name: Disable firewall for Domain, Public and Private profiles
-    win_firewall:
-      state: disabled
-      profiles:
-        - Domain
-        - Private
-        - Public
+      win_firewall:
+        state: disabled
+        profiles:
+            - Domain
+            - Private
+            - Public

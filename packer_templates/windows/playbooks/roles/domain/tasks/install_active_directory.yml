@@ -1,21 +1,20 @@
 ---
-    hosts: 10.242.43.253
     tasks:
-  - name: Setup new Active-Directory Domain & Forest
-    vars:
-      domain_name: 'starkindustries.marvel.com'
-      local_admin: '.\administrator'
-      dc_password: 'vagrant'
-      recovery_password: 'SafeModePassw0rd!'
-      reverse_dns_zone: "10.242.43.0/24"
-    gather_facts: no
-  - name: Install Active Directory
-    win_feature: >
+    - name: Setup new Active-Directory Domain & Forest
+      vars:
+        domain_name: 'starkindustries.marvel.com'
+        local_admin: '.\administrator'
+        dc_password: 'vagrant'
+        recovery_password: 'SafeModePassw0rd!'
+        reverse_dns_zone: "10.242.43.0/24"
+      gather_facts: no
+    - name: Install Active Directory
+      win_feature: >
         name=AD-Domain-Services
         include_management_tools=yes
         include_sub_features=yes
         state=present
-  - name: Create Domain
-    win_domain: >
-      dns_domain_name='{{ domain_name }}'
-      safe_mode_password='{{ recovery_password }}'
+    - name: Create Domain
+      win_domain: >
+        dns_domain_name='{{ domain_name }}'
+        safe_mode_password='{{ recovery_password }}'
