@@ -177,6 +177,8 @@
   "provisioners": [
     {
       "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "vagrant",
       "script": "./scripts/Upgrade-Powershell.ps1"
     },
     {
