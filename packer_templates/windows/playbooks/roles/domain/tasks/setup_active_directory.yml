@@ -18,6 +18,3 @@
             - Domain
             - Private
             - Public
-      - name: Set static IP address
-        win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress {{ dc_address }} -PrefixLength {{ dc_netmask_cidr }} -DefaultGateway {{ dc_gateway }}"
-        ignore_errors: True
