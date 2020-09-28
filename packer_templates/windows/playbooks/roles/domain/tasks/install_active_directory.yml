@@ -2,12 +2,19 @@
     - name: Install new Active-Directory Domain & Forest
       hosts: all
       vars:
+        dc_hostname: 'DC1'
         domain_name: 'starkindustries.marvel.com'
         local_admin: '.\administrator'
         dc_password: 'vagrant'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
       tasks:
+        - name: Change the hostname 
+          win_hostname:
+            name: '{{ dc_hostname }}'
+        - name: Reboot
+          win_reboot:
+            when: res.reboot_required
         - name: Install Active Directory
           win_feature: >
             name=AD-Domain-Services
@@ -17,6 +24,10 @@
         - name: Create Domain
           win_domain: >
             dns_domain_name='{{ domain_name }}'
+            domain_mode=Win2012R2
             safe_mode_password='{{ recovery_password }}'
-        - name: Create reverse DNS zone
-          win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"    
+        - name: Set internal DNS server 
+          win_dns_client:
+            adapter_names: '*'
+            ipv4_addresses:
+            - '127.0.0.1'

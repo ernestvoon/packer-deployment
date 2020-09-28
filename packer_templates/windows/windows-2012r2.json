@@ -226,7 +226,7 @@
   ],
   "variables": {
     "build_directory": "../../builds",
-    "cpus": "5",
+    "cpus": "2",
     "disk_size": "30000",
     "floppy_dir": ".",
     "guest_additions_mode": "attach",
@@ -235,8 +235,8 @@
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "/users/evoon057/win-iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
-    "memory": "4096",
-    "template": "windows-2012r2-standard",
+    "memory": "2048",
+    "template": "windows-2012r2-standard-dc",
     "unattended_file_path": "answer_files/2012_r2/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"
   }
