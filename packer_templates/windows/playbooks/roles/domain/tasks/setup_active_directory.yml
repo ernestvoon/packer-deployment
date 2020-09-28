@@ -1,5 +1,4 @@
 ---
-  
   - name: Setup new Active-Directory Domain & Forest
     hosts: all
     vars:

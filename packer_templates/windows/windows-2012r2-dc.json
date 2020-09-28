@@ -21,7 +21,7 @@
       "winrm_timeout": "12h",
       "winrm_use_ssl": true,
       "winrm_insecure": true,
-      "winrm_username": "Administrator"
+      "winrm_username": "vagrant"
     },
     {
       "communicator": "winrm",
@@ -63,7 +63,7 @@
       "winrm_timeout": "12h",
       "winrm_use_ssl": true,
       "winrm_insecure": true,
-      "winrm_username": "Administrator"
+      "winrm_username": "vagrant"
     },
     {
       "communicator": "winrm",
@@ -95,7 +95,7 @@
       "winrm_timeout": "12h",
       "winrm_use_ssl": true,
       "winrm_insecure": true,
-      "winrm_username": "Administrator"
+      "winrm_username": "vagrant"
     },
     {
       "communicator": "winrm",
@@ -122,7 +122,7 @@
       "winrm_timeout": "12h",
       "winrm_use_ssl": true,
       "winrm_insecure": true,
-      "winrm_username": "Administrator"
+      "winrm_username": "vagrant"
     },
     {
       "communicator": "winrm",
@@ -161,7 +161,7 @@
       "winrm_timeout": "12h",
       "winrm_use_ssl": true,
       "winrm_insecure": true,
-      "winrm_username": "Administrator"
+      "winrm_username": "vagrant"
     }
   ],
   "post-processors": [
@@ -187,7 +187,7 @@
       "playbook_file": "./playbooks/roles/common/tasks/initial_setup.yml",
       "extra_arguments": [
          "--connection", "winrm", "-vvvv", 
-         "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
+         "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=vagrant ansible_password=vagrant become_method=runas become_user=Administrator become_password=vagrant" 
         ]
     },
     {
@@ -199,7 +199,7 @@
       "playbook_file": "./playbooks/roles/domain/tasks/setup_active_directory.yml",
       "extra_arguments": [
         "--connection", "winrm", "-vvvv", 
-        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
+        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=vagrant ansible_password=vagrant become_method=runas become_user=Administrator become_password=vagrant" 
        ]
     },
     {
@@ -211,7 +211,7 @@
       "playbook_file": "./playbooks/roles/domain/tasks/install_active_directory.yml",
       "extra_arguments": [
         "--connection", "winrm", "-vvvv", 
-        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
+        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=vagrant ansible_password=vagrant become_method=runas become_user=Administrator become_password=vagrant" 
        ]
     },
     {
