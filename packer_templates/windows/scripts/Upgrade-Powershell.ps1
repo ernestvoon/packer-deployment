@@ -84,7 +84,7 @@ Param(
     [string]$version = "5.1",
     [string]$username = "Administrator",
     [string]$password = "vagrant",
-    [switch]$verbose = $false
+    [switch]$verbose = $true
 )
 $ErrorActionPreference = 'Stop'
 if ($verbose) {
