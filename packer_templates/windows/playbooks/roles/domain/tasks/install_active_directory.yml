@@ -2,6 +2,7 @@
     - name: Install new Active-Directory Domain & Forest
       hosts: all
       vars:
+        dc_address: '10.242.43.253'
         dc_hostname: 'DC1'
         domain_name: 'starkindustries.marvel.com'
         local_admin: '.\administrator'
@@ -12,6 +13,7 @@
         - name: Change the hostname 
           win_hostname:
             name: '{{ dc_hostname }}'
+          register: res
         - name: Reboot
           win_reboot:
             when: res.reboot_required
@@ -31,3 +33,17 @@
             adapter_names: '*'
             ipv4_addresses:
             - '127.0.0.1'
+        - name: Set up static IP address
+          win_shell: "Get-NetIpAddress -InterfaceAlias 'Ethernet' | New-NetIpAddress -IpAddress 10.242.43.253 -PrefixLength 24 -DefaultGateway 10.242.43.254"
+          async: 100 # Using "fire-and-forget" asynchronous execution for this task, otherwise it will always fail and timeout
+          poll: 0
+        - name: Change ansible's ip address for each host
+          set_fact:
+            ansible_host: {{ dc_address }}
+        - name: Wait for the hosts network interface to come back up
+          local_action:
+            module: wait_for
+            host: "{{ ansible_host }}"
+            port: 5986
+            delay: 10
+            state: started
