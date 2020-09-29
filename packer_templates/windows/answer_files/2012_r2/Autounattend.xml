@@ -147,7 +147,6 @@
                 <SkipMachineOOBE>true</SkipMachineOOBE>
                 <SkipUserOOBE>true</SkipUserOOBE>
             </OOBE>
-      <ComputerName>DC1</ComputerName>
       <TimeZone>Singapore Standard Time</TimeZone>
       <UserAccounts>
         <AdministratorPassword>

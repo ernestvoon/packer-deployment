@@ -3,19 +3,12 @@
       hosts: all
       vars:
         dc_address: '10.242.43.253'
-        dc_hostname: 'DC1'
         domain_name: 'starkindustries.marvel.com'
         local_admin: '.\administrator'
         dc_password: 'vagrant'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
       tasks:
-        - name: Change the hostname 
-          win_hostname:
-            name: '{{ dc_hostname }}'
-          register: res
-        - name: Reboot
-          win_reboot:
         - name: Install Active Directory
           win_feature: >
             name=AD-Domain-Services
