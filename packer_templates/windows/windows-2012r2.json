@@ -194,30 +194,6 @@
       "type": "windows-restart"
     },
     {
-      "type": "ansible",
-      "use_proxy": false,
-      "playbook_file": "./playbooks/roles/domain/tasks/setup_active_directory.yml",
-      "extra_arguments": [
-        "--connection", "winrm", "-vvvv", 
-        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
-       ]
-    },
-    {
-      "type": "windows-restart"
-    },
-    {
-      "type": "ansible",
-      "use_proxy": false,
-      "playbook_file": "./playbooks/roles/domain/tasks/install_active_directory.yml",
-      "extra_arguments": [
-        "--connection", "winrm", "-vvvv", 
-        "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
-       ]
-    },
-    {
-      "type": "windows-restart"
-    },
-    {
       "elevated_password": "vagrant",
       "elevated_user": "vagrant",
       "script": "./scripts/cleanup.ps1",
@@ -230,13 +206,13 @@
     "disk_size": "30000",
     "floppy_dir": ".",
     "guest_additions_mode": "attach",
-    "guest_additions_url": "",
+    "guest_additions_url": "/opt/VirtualBox-6.1/additions/VBoxGuestAdditions_6.1.14.iso",
     "headless": "true",
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "/users/evoon057/win-iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
     "memory": "2048",
-    "template": "windows-2012r2-standard-dc",
+    "template": "windows-2012r2-standard",
     "unattended_file_path": "answer_files/2012_r2/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"
   }
