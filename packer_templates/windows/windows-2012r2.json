@@ -185,10 +185,18 @@
         ]
     },
     {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "scripts/vm-guest-tools.ps1"
+      ]
+    },
+    {
       "type": "powershell",
       "elevated_user": "Administrator",
       "elevated_password": "vagrant",
-      "script": "./scripts/Upgrade-Powershell.ps1"
+      "script": "scripts/Upgrade-Powershell.ps1"
     },
     {
       "type": "windows-restart"
@@ -196,7 +204,7 @@
     {
       "elevated_password": "vagrant",
       "elevated_user": "vagrant",
-      "script": "./scripts/cleanup.ps1",
+      "script": "scripts/cleanup.ps1",
       "type": "powershell"
     }
   ],
@@ -205,8 +213,8 @@
     "cpus": "2",
     "disk_size": "30000",
     "floppy_dir": ".",
-    "guest_additions_mode": "upload",
-    "guest_additions_url": "/usr/share/virtualbox/VBoxGuestAdditions.iso",
+    "guest_additions_mode": "attach",
+    "guest_additions_url": "",
     "headless": "true",
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:849734f37346385dac2c101e4aacba4626bb141c",
