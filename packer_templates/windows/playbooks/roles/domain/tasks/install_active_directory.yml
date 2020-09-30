@@ -1,14 +1,29 @@
 ---
-    - name: Install new Active-Directory Domain & Forest
+    tasks:
+    - name: Setup and Install new Active-Directory Domain & Forest
       hosts: all
       vars:
-        dc_address: '10.242.43.253'
+        dc_address: 10.242.43.253
+        dc_netmask_cidr: 24
+        dc_gateway: 10.242.43.254
         domain_name: 'starkindustries.marvel.com'
         local_admin: '.\administrator'
         dc_password: 'vagrant'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
       tasks:
+        - name: Set internal DNS server 
+          win_dns_client:
+            adapter_names: '*'
+            ipv4_addresses:
+              - '127.0.0.1'
+        - name: Disable firewall for Domain, Public and Private profiles
+          win_firewall:
+            state: disabled
+            profiles:
+              - Domain
+              - Private
+              - Public
         - name: Install Active Directory
           win_feature: >
             name=AD-Domain-Services
