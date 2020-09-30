@@ -185,12 +185,10 @@
         ]
     },
     {
-      "type": "shell",
-      "remote_path": "/tmp/script.bat",
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
-      "scripts": [
-        "scripts/vm-guest-tools.ps1"
-      ]
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "vagrant",
+      "script": "scripts/vm-guest-tools.ps1"
     },
     {
       "type": "powershell",
