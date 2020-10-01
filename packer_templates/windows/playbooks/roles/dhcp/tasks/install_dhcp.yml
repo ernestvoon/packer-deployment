@@ -7,15 +7,15 @@
           ipv4_addresses:
             - '10.43.242.253'
       - name: Join Domain
-        win_domain_membership: >
-          dns_domain_name=starkindustries.marvel.com
-          hostname=DHCP1
-          domain_admin_user=starkindustries\vagrant
-          domain_admin_password=vagrant
-          state=domain
+        win_domain_membership:
+          dns_domain_name: starkindustries.marvel.com
+          hostname: DHCP1
+          domain_admin_user: starkindustries\vagrant
+          domain_admin_password: vagrant
+          state: domain
       - name: Install DHCP Server
-        win_feature: >
-          name=DhcpServer
-          include_management_tools=yes
-          include_sub_features=yes
-          state=present
+        win_feature:
+          name: DhcpServer
+          include_management_tools: yes
+          include_sub_features: yes
+          state: present
