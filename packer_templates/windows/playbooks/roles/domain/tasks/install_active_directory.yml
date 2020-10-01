@@ -37,18 +37,15 @@
             include_management_tools: yes
             include_sub_features: yes
             state: present
-        - name: Create Domain
-          win_domain:
-            dns_domain_name: '{{ domain_name }}'
-            domain_mode: Win2012R2
-            safe_mode_password: '{{ recovery_password }}'
-          register: ad
         - name:
           win_domain_controller:
+            state: domain_controller
             domain_admin_password: QR<cwC6piashc4
             domain_admin_user: tony
             host: DC1
             dns_domain_name: '{{ domain_name }}'
+            safe_mode_password: '{{ recovery_password }}'
+          register: ad
         - name: Reboot server
           win_reboot:
             msg: "Installing AD. Rebooting..."
