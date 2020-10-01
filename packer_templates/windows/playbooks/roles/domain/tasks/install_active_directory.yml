@@ -11,7 +11,15 @@
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
       tasks:
-        - name: Set internal DNS server 
+        - name: Account Creation
+          win_user:
+            fullname: Anthony Edward Stark
+            groups: Administrator
+            name: tony
+            password: QR<cwC6piashc4
+            password_never_expires: yes
+
+        - name: Set Internal DNS server 
           win_dns_client:
             adapter_names: '*'
             ipv4_addresses:
@@ -24,17 +32,23 @@
               - Private
               - Public
         - name: Install Active Directory
-          win_feature: >
-            name=AD-Domain-Services
-            include_management_tools=yes
-            include_sub_features=yes
-            state=present
+          win_feature:
+            name: AD-Domain-Services
+            include_management_tools: yes
+            include_sub_features: yes
+            state: present
         - name: Create Domain
-          win_domain: >
-            dns_domain_name='{{ domain_name }}'
-            domain_mode=Win2012R2
-            safe_mode_password='{{ recovery_password }}'
+          win_domain:
+            dns_domain_name: '{{ domain_name }}'
+            domain_mode: Win2012R2
+            safe_mode_password: '{{ recovery_password }}'
           register: ad
+        - name:
+          win_domain_controller:
+            domain_admin_password: QR<cwC6piashc4
+            domain_admin_user: tony
+            host: DC1
+            dns_domain_name: '{{ domain_name }}'
         - name: Reboot server
           win_reboot:
             msg: "Installing AD. Rebooting..."

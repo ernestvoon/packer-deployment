@@ -200,7 +200,7 @@
       "type": "windows-restart"
     },
     {
-      "elevated_password": "vagrant",
+      "elevated_password": "Administrator",
       "elevated_user": "vagrant",
       "script": "scripts/cleanup.ps1",
       "type": "powershell"
