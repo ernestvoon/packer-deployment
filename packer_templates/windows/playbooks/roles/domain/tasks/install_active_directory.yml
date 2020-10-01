@@ -1,7 +1,7 @@
 ---
     tasks:
     - name: Setup and Install new Active-Directory Domain & Forest
-      hosts: all
+      hosts: dc
       vars:
         dc_address: 10.242.43.253
         dc_netmask_cidr: 24
@@ -30,6 +30,12 @@
             include_management_tools=yes
             include_sub_features=yes
             state=present
+          register: ad
+        - name: reboot server
+          win_reboot:
+          msg: "Installing AD. Rebooting..."
+          pre_reboot_delay: 15
+          when: ad.changed
         - name: Create Domain
           win_domain: >
             dns_domain_name='{{ domain_name }}'
@@ -40,3 +46,9 @@
             adapter_names: '*'
             ipv4_addresses:
             - '127.0.0.1'
+        - name: Create reverse DNS zone
+          win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"    
+          retries: 30
+          delay: 60
+          register: result           
+          until: result is succeeded
