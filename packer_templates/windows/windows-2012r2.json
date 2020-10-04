@@ -42,7 +42,7 @@
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "type": "virtualbox-iso",
       "vboxmanage": [
@@ -112,7 +112,7 @@
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "suhtdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "15m",
       "tools_upload_flavor": "windows",
       "tools_upload_path": "c:/Windows/Temp/vmware.iso",
@@ -192,7 +192,7 @@
     },
     {
       "type": "powershell",
-      "elevated_user": "Administrator",
+      "elevated_user": "vagrant",
       "elevated_password": "vagrant",
       "script": "scripts/Upgrade-Powershell.ps1"
     },
@@ -204,6 +204,12 @@
       "elevated_user": "vagrant",
       "script": "scripts/cleanup.ps1",
       "type": "powershell"
+    }
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "scripts/save_shutdown_command.ps1"
     }
   ],
   "variables": {

@@ -2,23 +2,10 @@
     - name: Setup and Install new Active-Directory Domain & Forest
       hosts: dc
       vars:
-        dc_address: 10.242.43.253
-        dc_netmask_cidr: 24
-        dc_gateway: 10.242.43.254
         domain_name: 'starkindustries.marvel.com'
-        local_admin: '.\administrator'
-        dc_password: 'vagrant'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
       tasks:
-        - name: Account Creation
-          win_user:
-            fullname: Anthony Edward Stark
-            groups: Administrator
-            name: tony
-            password: QR<cwC6piashc4
-            password_never_expires: yes
-
         - name: Set Internal DNS server 
           win_dns_client:
             adapter_names: '*'
@@ -38,11 +25,8 @@
             include_sub_features: yes
             state: present
         - name:
-          win_domain_controller:
-            state: domain_controller
-            domain_admin_password: QR<cwC6piashc4
-            domain_admin_user: tony
-            host: DC1
+          win_domain:
+            domain_mode: Win2012R2 
             dns_domain_name: '{{ domain_name }}'
             safe_mode_password: '{{ recovery_password }}'
           register: ad
@@ -57,3 +41,10 @@
           delay: 60
           register: result           
           until: result is succeeded
+        - name: Domain Account Creation
+          win_user:
+            fullname: Anthony Edward Stark
+            groups: Administrators
+            name: tony
+            password: QR<cwC6piashc4
+            password_never_expires: yes
