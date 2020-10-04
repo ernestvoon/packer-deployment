@@ -13,7 +13,7 @@
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "switch_name": "{{user `hyperv_switch`}}",
       "type": "hyperv-iso",
@@ -41,6 +41,7 @@
       "iso_interface": "sata",
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
+      "post_shutdown_delay": "5m",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
       "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
@@ -88,7 +89,7 @@
         ]
       ],
       "prlctl_version_file": ".prlctl_version",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "type": "parallels-iso",
       "winrm_password": "vagrant",
@@ -112,7 +113,7 @@
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
-      "suhtdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "tools_upload_flavor": "windows",
       "tools_upload_path": "c:/Windows/Temp/vmware.iso",
@@ -154,7 +155,7 @@
           "file={{ user `build_directory` }}/packer-{{ user `template` }}-qemu/{{ .Name }},if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1"
         ]
       ],
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_command": "A:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "type": "qemu",
       "winrm_password": "vagrant",
@@ -204,7 +205,7 @@
       "elevated_user": "vagrant",
       "script": "scripts/cleanup.ps1",
       "type": "powershell"
-    }
+    },
     {
       "type": "powershell",
       "elevated_user": "vagrant",

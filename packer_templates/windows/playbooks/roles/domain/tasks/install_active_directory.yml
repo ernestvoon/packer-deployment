@@ -2,6 +2,7 @@
     - name: Setup and Install new Active-Directory Domain & Forest
       hosts: dc
       vars:
+        dc_address: 10.242.43.253
         domain_name: 'starkindustries.marvel.com'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
@@ -35,16 +36,38 @@
             msg: "Installing AD. Rebooting..."
             pre_reboot_delay: 15
           when: ad.changed
+        - name: Domain Account Creation
+          win_user:
+            fullname: Anthony Edward Stark
+            groups:
+              - Administrators
+              - Domain Admins
+            name: tony
+            password: QR<cwC6piashc4
+            password_never_expires: yes
         - name: Create reverse DNS zone
           win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"    
           retries: 30
           delay: 60
           register: result           
           until: result is succeeded
-        - name: Domain Account Creation
-          win_user:
-            fullname: Anthony Edward Stark
-            groups: Administrators
-            name: tony
-            password: QR<cwC6piashc4
-            password_never_expires: yes
+        - name: Create DNS records
+          win_dns_record:
+            name: "{{ item.name }}"
+            type: "{{ item.type }}"
+            value: "{{ item.value }}"
+            zone: "{{ item.zone }}"
+          with_items:
+            - name: "10.242.43.253"
+              type: "PTR"
+              value: "dc1"
+              zone: "43.242.10.in-addr.arpa"
+            - name: "10.242.43.252"
+              type: "PTR"
+              value: "dhcp1"
+              zone: "43.242.10.in-addr.arpa"
+            - name: "dhcp1"
+              type: "A"
+              value: "10.242.43.252"
+              zone: "starkindustries.marvel.com"
+            

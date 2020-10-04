@@ -10,12 +10,12 @@
         win_domain_membership:
           dns_domain_name: starkindustries.marvel.com
           hostname: DHCP1
-          domain_admin_user: starkindustries\Administrator
-          domain_admin_password: vagrant
+          domain_admin_user: starkindustries\tony
+          domain_admin_password: QR<cwC6piashc4
           state: domain
       - name: Install DHCP Server
         win_feature:
-          name: DhcpServer
+          name: DHCP
           include_management_tools: yes
           include_sub_features: yes
           state: present
