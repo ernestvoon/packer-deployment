@@ -37,12 +37,13 @@
             pre_reboot_delay: 15
           when: ad.changed
         - name: Domain Account Creation
-          win_user:
-            fullname: Anthony Edward Stark
+          win_domain_user:
+            surname: Edward
+            firstname: Stark
+            company: Stark Industries
             groups:
-              - Administrators
               - Domain Admins
-            name: tony
+            name: stark
             password: QR<cwC6piashc4
             password_never_expires: yes
         - name: Create reverse DNS zone
