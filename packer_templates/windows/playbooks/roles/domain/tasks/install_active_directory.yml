@@ -40,12 +40,12 @@
           when: ad.changed
         - name: Domain Account Creation
           win_domain_user:
-            surname: {{ item.surname }}
-            firstname: {{ item.firstname }}
+            surname: "{{ item.surname }}"
+            firstname: "{{ item.firstname }}"
             company: Stark Industries
-            groups: {{ item.groups }}
-            name: {{ item.name }}
-            password: {{ item.password }}
+            groups: "{{ item.groups }}"
+            name: "{{ item.name }}"
+            password: "{{ item.password }}"
             password_never_expires: yes
             async: 180
             poll: 0
@@ -74,8 +74,8 @@
             type: "{{ item.type }}"
             value: "{{ item.value }}"
             zone: "{{ item.zone }}"
-            async: 180
-            poll: 0
+          async: 180
+          poll: 0
           with_items:
             - name: "10.242.43.253"
               type: "PTR"
