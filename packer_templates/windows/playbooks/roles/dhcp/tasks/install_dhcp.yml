@@ -23,3 +23,22 @@
       - name: Reboot if installing DHCP feature requires it
         win_reboot:
         when: dhcp.reboot_required
+      - name: Implement Security Groups to DHCP
+        win_shell: netsh dhcp add securitygroups
+      - name: Restart DHCP Services
+        win_shell: Restart-Service dhcpserver
+      - name: Authorise DHCP Server to the AD
+        win_shell: Add-DhcpServerInDC -DnsName DHCP1.starkindustries.marvel.com -IPAddress 10.242.43.252
+        vars:
+          ansible_become: true
+          ansible_become_method: runas
+          ansible_become_user: starkindustries\stark
+          ansible_become_password: QR<cwC6piashc4
+      - name: Notify Server Manager that post-install DHCP configuration is completed
+        win_shell: Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
+      - name: Setup a DHCP scope
+        win_shell: |
+          Add-DhcpServerv4Scope -name "Engineering" -StartRange 10.242.43.1 -EndRange 10.242.43.253 -SubnetMask 255.255.255.0 -State Active
+          Add-DhcpServerv4ExclusionRange -ScopeID 10.242.43.0 -StartRange 10.242.43.240 -EndRange 10.242.43.253
+          Set-DhcpServerv4OptionValue -OptionID 3 -Value 10.242.43.252 -ScopeID 10.242.43.0 -ComputerName DHCP1.starkindustries.marvel.com
+          Set-DhcpServerv4OptionValue -DnsDomain starkindustries.marvel.com -DnsServer 10.242.43.253

@@ -12,6 +12,8 @@
             adapter_names: '*'
             ipv4_addresses:
               - '127.0.0.1'
+          async: 30
+          poll: 0
         - name: Disable firewall for Domain, Public and Private profiles
           win_firewall:
             state: disabled
@@ -38,14 +40,28 @@
           when: ad.changed
         - name: Domain Account Creation
           win_domain_user:
-            surname: Edward
-            firstname: Stark
+            surname: {{ item.surname }}
+            firstname: {{ item.firstname }}
             company: Stark Industries
-            groups:
-              - Domain Admins
-            name: stark
-            password: QR<cwC6piashc4
+            groups: {{ item.groups }}
+            name: {{ item.name }}
+            password: {{ item.password }}
             password_never_expires: yes
+            async: 180
+            poll: 0
+          with_items:
+            - surname: Rhodes
+              firstname: James
+              groups:
+                - Domain Users
+              name: stark
+              password: AVeryS3curePassw0rd!
+            - surname: Edward
+              firstname: Stark
+              groups:
+                - Domain Admins
+              name: stark
+              password: QR<cwC6piashc4
         - name: Create reverse DNS zone
           win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"    
           retries: 30
@@ -58,6 +74,8 @@
             type: "{{ item.type }}"
             value: "{{ item.value }}"
             zone: "{{ item.zone }}"
+            async: 180
+            poll: 0
           with_items:
             - name: "10.242.43.253"
               type: "PTR"
