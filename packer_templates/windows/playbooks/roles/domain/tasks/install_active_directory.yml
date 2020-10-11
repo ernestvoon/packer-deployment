@@ -21,6 +21,8 @@
               - Domain
               - Private
               - Public
+          async: 30
+          poll: 0
         - name: Install Active Directory
           win_feature:
             name: AD-Domain-Services
@@ -47,14 +49,14 @@
             name: "{{ item.name }}"
             password: "{{ item.password }}"
             password_never_expires: yes
-            async: 180
-            poll: 0
+          async: 180
+          poll: 0
           with_items:
             - surname: Rhodes
               firstname: James
               groups:
                 - Domain Users
-              name: stark
+              name: rhodes
               password: AVeryS3curePassw0rd!
             - surname: Edward
               firstname: Stark

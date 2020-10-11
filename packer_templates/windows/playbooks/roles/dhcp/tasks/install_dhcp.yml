@@ -25,6 +25,8 @@
         when: dhcp.reboot_required
       - name: Implement Security Groups to DHCP
         win_shell: netsh dhcp add securitygroups
+        async: 30
+        poll: 0
       - name: Restart DHCP Services
         win_shell: Restart-Service dhcpserver
       - name: Authorise DHCP Server to the AD
