@@ -189,10 +189,13 @@
       "type": "powershell",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
-      "script": [
-        "scripts/vm-guest-tools.ps1",
-        "scripts/Upgrade-Powershell.ps1"
-      ]
+      "script": "scripts/vm-guest-tools.ps1"
+    },
+    {
+      "elevated_password": "vagrant",
+      "elevated_user": "vagrant",
+      "script": "scripts/Upgrade-Powershell.ps1",
+      "type": "powershell"
     },
     {
       "type": "windows-restart"

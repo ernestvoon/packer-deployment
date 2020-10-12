@@ -74,7 +74,7 @@
       "floppy_files": [
         "{{ user `unattended_file_path` }}"
       ],
-      "guest_os_type": "win-2012",
+      "guest_os_type": "win-10",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
@@ -171,7 +171,7 @@
         "keep_input_artifact": true,
         "output": "{{ user `template` }}-{{.Provider}}.box",
         "type": "vagrant",
-        "vagrantfile_template": "./vagrantfile-windows_10_pro.template"
+        "vagrantfile_template": "./vagrantfile-windows_10.template"
       }
     ]
   ],
@@ -189,10 +189,13 @@
       "type": "powershell",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
-      "script": [
-        "scripts/vm-guest-tools.ps1",
-        "scripts/Upgrade-Powershell.ps1"
-      ]
+      "script": "scripts/vm-guest-tools.ps1"
+    },
+    {
+      "elevated_password": "vagrant",
+      "elevated_user": "vagrant",
+      "script": "scripts/Upgrade-Powershell.ps1",
+      "type": "powershell"
     },
     {
       "type": "windows-restart"
@@ -222,7 +225,7 @@
     "iso_checksum": "sha1:02dbb2dba9992605cbb867c323c60f622b7206fe",
     "iso_url": "/users/evoon057/win-iso/Win10_N_EnglishInternational_x64.ISO",
     "memory": "2048",
-    "template": "windows-10-pro",
+    "template": "windows-10",
     "unattended_file_path": "answer_files/2012_r2/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"
   }
