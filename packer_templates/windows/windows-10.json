@@ -222,7 +222,7 @@
     "guest_additions_url": "",
     "headless": "true",
     "hyperv_switch": "{{env `hyperv_switch`}}",
-    "iso_checksum": "sha1:02dbb2dba9992605cbb867c323c60f622b7206fe",
+    "iso_checksum": "sha1:f57e034095e0423feb575ca82855f73e39ffa713",
     "iso_url": "/users/evoon057/win-iso/19041.264.200511-0456.vb_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
     "memory": "2048",
     "template": "windows-10",
