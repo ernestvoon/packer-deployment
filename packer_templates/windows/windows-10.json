@@ -226,7 +226,7 @@
     "iso_url": "/users/evoon057/win-iso/Win10_N_EnglishInternational_x64.ISO",
     "memory": "2048",
     "template": "windows-10",
-    "unattended_file_path": "answer_files/2012_r2/Autounattend.xml",
+    "unattended_file_path": "answer_files/10/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"
   }
 }
