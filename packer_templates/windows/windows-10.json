@@ -223,7 +223,7 @@
     "headless": "true",
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:02dbb2dba9992605cbb867c323c60f622b7206fe",
-    "iso_url": "/users/evoon057/win-iso/Win10_N_EnglishInternational_x64.ISO",
+    "iso_url": "/users/evoon057/win-iso/19041.264.200511-0456.vb_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
     "memory": "2048",
     "template": "windows-10",
     "unattended_file_path": "answer_files/10/Autounattend.xml",

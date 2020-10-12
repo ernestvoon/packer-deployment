@@ -51,7 +51,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
-                            <Value>Windows 10 Pro</Value>
+                            <Value>Windows 10 Enterprise Evaluation</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
