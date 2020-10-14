@@ -12,8 +12,6 @@
             adapter_names: '*'
             ipv4_addresses:
               - '127.0.0.1'
-          async: 30
-          poll: 0
         - name: Disable firewall for Domain, Public and Private profiles
           win_firewall:
             state: disabled
@@ -21,8 +19,6 @@
               - Domain
               - Private
               - Public
-          async: 30
-          poll: 0
         - name: Install Active Directory
           win_feature:
             name: AD-Domain-Services
@@ -49,8 +45,6 @@
             name: "{{ item.name }}"
             password: "{{ item.password }}"
             password_never_expires: yes
-          async: 180
-          poll: 0
           with_items:
             - surname: Rhodes
               firstname: James
@@ -76,8 +70,6 @@
             type: "{{ item.type }}"
             value: "{{ item.value }}"
             zone: "{{ item.zone }}"
-          async: 180
-          poll: 0
           with_items:
             - name: "10.242.43.253"
               type: "PTR"
