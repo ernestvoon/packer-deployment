@@ -7,8 +7,6 @@
         name: "{{ item.name }}"
         data: "{{ item.data }}"
         type: "{{ item.type }}"
-      async: 300
-      poll: 0
       with_items:
         - path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore
           name: DisableSR
