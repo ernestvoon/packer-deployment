@@ -182,7 +182,7 @@
       "playbook_file": "./playbooks/roles/common/tasks/initial_setup.yml",
       "extra_arguments": [
          "--connection", "winrm", "-vvvv", 
-         "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=Administrator ansible_password=vagrant" 
+         "--extra-vars", "ansible_winrm_server_cert_validation=ignore ansible_user=vagrant ansible_password=vagrant" 
         ]
     },
     {
