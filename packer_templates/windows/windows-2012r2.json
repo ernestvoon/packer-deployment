@@ -215,7 +215,7 @@
   ],
   "variables": {
     "build_directory": "../../builds",
-    "cpus": "2",
+    "cpus": "3",
     "disk_size": "30000",
     "floppy_dir": ".",
     "guest_additions_mode": "attach",

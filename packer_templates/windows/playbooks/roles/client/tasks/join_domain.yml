@@ -1,5 +1,5 @@
 ---
-    - hosts: dhcp
+    - hosts: client
       tasks:
         - name: Set internal DNS server 
         win_dns_client:

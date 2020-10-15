@@ -215,7 +215,7 @@
   ],
   "variables": {
     "build_directory": "../../builds",
-    "cpus": "2",
+    "cpus": "3",
     "disk_size": "30000",
     "floppy_dir": ".",
     "guest_additions_mode": "attach",
@@ -224,7 +224,7 @@
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "iso_checksum": "sha1:f57e034095e0423feb575ca82855f73e39ffa713",
     "iso_url": "/users/evoon057/win-iso/19041.264.200511-0456.vb_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
-    "memory": "2048",
+    "memory": "4096",
     "template": "windows-10",
     "unattended_file_path": "answer_files/10/Autounattend.xml",
     "virtio_win_iso": "virtio-win.iso"

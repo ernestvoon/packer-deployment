@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
       dc.vm.box = "windows/winsvr2012r2"
       dc.vm.hostname = "DC1"
       dc.vm.network "private_network", ip: "10.242.43.253", netmask: "255.255.255.0"
+      dc.vm.synced_folder = ".", "/vagrant", disabled: true
       dc.vm.provision "ansible" do |ansible|
           ansible.playbook = "../packer_templates/windows/playbooks/roles/domain/tasks/install_active_directory.yml"
           ansible.inventory_path = "/etc/ansible/hosts"
@@ -39,6 +40,7 @@ Vagrant.configure("2") do |config|
       dhcp.vm.box = "windows/winsvr2012r2"
       dhcp.vm.hostname = "DHCP1"
       dhcp.vm.network "private_network", ip: "10.242.43.252", netmask: "255.255.255.0"
+      dhcp.vm.synced_folder = ".", "/vagrant", disabled: true
       dhcp.vm.provision "ansible" do |ansible|
           ansible.playbook = "../packer_templates/windows/playbooks/roles/dhcp/tasks/install_dhcp.yml"
           ansible.inventory_path = "/etc/ansible/hosts"
@@ -46,8 +48,10 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "client" do |client|
+      client.vm.boot_timeout = 600
       client.vm.box = "windows/win10"
-      client.vm.network "private_network", ip: "10.242.43.1", netmask: "255.255.255.0"
+      client.vm.network "private_network", type: "dhcp"
+      client.vm.synced_folder = ".", "/vagrant", disabled: true
       client.vm.provision "ansible" do |ansible|
           ansible.playbook = "../packer_templates/windows/playbooks/roles/client/tasks/join_domain.yml"
           ansible.inventory_path = "/etc/ansible/hosts"
