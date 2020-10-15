@@ -1,0 +1,14 @@
+---
+    - hosts: dhcp
+      tasks:
+        - name: Set internal DNS server 
+        win_dns_client:
+          adapter_names: '*'
+          ipv4_addresses:
+            - '10.242.43.253'
+        - name: Join Domain
+          win_domain_membership:
+            dns_domain_name: starkindustries.marvel.com
+            domain_admin_user: starkindustries\stark
+            domain_admin_password: QR<cwC6piashc4
+            state: domain
