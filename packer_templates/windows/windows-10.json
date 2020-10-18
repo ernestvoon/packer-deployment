@@ -58,12 +58,6 @@
           "{{.Name}}",
           "--audio",
           "none"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--nic2",
-          "hostonly"
         ]
       ],
       "winrm_password": "vagrant",
