@@ -1,6 +1,14 @@
 ---
     - hosts: client
       tasks:
+        - name: Install OpenSSH Server
+          win_shell: "Add-WindowsCapability -Online -Name OpenSSH.Server*"
+        - name: Install OpenSSH Server
+          win_shell: |
+          Start-Service sshd
+          Set-Service -Name sshd -StartupType 'Automatic'
+          Get-NetFirewallRule -Name *ssh*
+          New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
         - name: Set internal DNS server 
           win_dns_client:
             adapter_names: '*'

@@ -12,20 +12,6 @@ Vagrant.configure("2") do |config|
   
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://vagrantcloud.com/search.
-  
-    # config.vm.provision "ansible" do |ansible|
-    #   ansible.groups = {
-    #     "dc" => ["10.242.43.253"],
-    #     "dhcp" => ["10.242.43.252"],
-    #     "all:vars" => {"ansible_user" => "vagrant",
-    #                    "ansible_password" => "vagrant",
-    #                    "ansible_connection" => "winrm",
-    #                    "ansible_winrm_scheme" => "https",
-    #                    "ansible_winrm_server_cert_validation" => "ignore"}
-    #   }
-    # end
-
-    config.vm.boot_timeout = 900
 
     config.vm.define "dc" do |dc|
       dc.vm.box = "windows/winsvr2012r2"
@@ -50,9 +36,8 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "client" do |client|
+      client.vm.boot_timeout = 1800
       client.vm.box = "windows/win10"
-      client.vm.network "private_network", type: "dhcp",
-        name: "vboxnet0"
       client.vm.synced_folder ".", "/vagrant", disabled: true
       client.vm.provision "ansible" do |ansible|
           ansible.playbook = "../packer_templates/windows/playbooks/roles/client/tasks/join_domain.yml"

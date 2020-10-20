@@ -1,0 +1,58 @@
+---
+- hosts: all
+  tasks:
+    - name: Disable Online Windows Account logins and reduced the cached login number
+      win_regedit:
+        path: "{{ item.path }}"
+        name: "{{ item.name }}"
+        data: "{{ item.data }}"
+        type: "{{ item.type }}"
+      with_items:
+        - path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+          name: NoConnectedUser
+          data: 0
+          type: dword
+        - path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+          name: CachedLogonsCount
+          data: 4
+          type: REG_SZ
+        - path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
+          name: restrictanonymoussam
+          data: 1
+          type: dword
+    - name: Assign lockout policy for multiple failed attempts
+      win_security_policy:
+        key: "{{item.key}}"
+        section: "{{item.section}}"
+        value: "{{item.value}}"
+      with_items:
+        - key: LockoutBadCount
+          section: System Access
+          value: 8  
+        - key: ResetLockoutCount
+          section: System Access
+          value: 15
+        - key: LockoutDuration
+          section: System Access
+          value: 15
+        - key: SeNetworkLogonRight
+          section: Privilege Rights
+          value: "*S-1-5-11,*S-1-5-32-544,*S-1-5-32-545,*S-1-5-32-551,*S-1-5-21domain-512,*S-1-5-21domain-513"
+        - key: SeMachineAccountPrivilege
+          section: Privilege Rights
+          value: "*S-1-5-32-544"
+        - key: SeRemoteInteractiveLogonRight
+          section: Privilege Rights
+          value: "*S-1-5-32-544"
+        - key: SeBackupPrivilege
+          section: Privilege Rights
+          value: "*S-1-5-32-544"
+        - key: SeDenyNetworkLogonRight
+          section: Privilege Rights
+          value: "*S-1-2-0,*S-1-5-32-546"
+        - key: SeDenyRemoteInteractiveLogonRight
+          section: Privilege Rights
+          value: "*S-1-2-0,*S-1-5-32-546"
+        - key: EnableAdminAccount
+          section: System Acess
+          value: 0
