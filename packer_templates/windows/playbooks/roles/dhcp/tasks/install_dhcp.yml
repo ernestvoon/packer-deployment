@@ -1,11 +1,17 @@
 ---
     - hosts: dhcp
+      vars:
+        dhcp_address: "10.242.43.252"
+        dhcp_gateway: "10.242.43.254"
+        dhcp_dns: "10.242.43.253"
       tasks:
       - name: Set internal DNS server 
         win_dns_client:
           adapter_names: '*'
           ipv4_addresses:
             - '10.242.43.253'
+      - name: Set Default Gateway
+        win_shell: New-NetIPAddress –IPAddress {{dhcp_address}} -DefaultGateway {{dhcp_gateway}} -PrefixLength 24 -InterfaceAlias Ethernet 2
       - name: Join Domain
         win_domain_membership:
           dns_domain_name: starkindustries.marvel.com
@@ -40,5 +46,5 @@
         win_shell: |
           Add-DhcpServerv4Scope -name "Engineering" -StartRange 10.242.43.1 -EndRange 10.242.43.253 -SubnetMask 255.255.255.0 -State Active
           Add-DhcpServerv4ExclusionRange -ScopeID 10.242.43.0 -StartRange 10.242.43.240 -EndRange 10.242.43.253
-          Set-DhcpServerv4OptionValue -OptionID 3 -Value 10.242.43.252 -ScopeID 10.242.43.0 -ComputerName DHCP1.starkindustries.marvel.com
+          Set-DhcpServerv4OptionValue -OptionID 3 -Value {{dhcp_gateway}} -ScopeID 10.242.43.0 -ComputerName DHCP1.starkindustries.marvel.com
           Set-DhcpServerv4OptionValue -DnsDomain starkindustries.marvel.com -DnsServer 10.242.43.253

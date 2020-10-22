@@ -2,7 +2,9 @@
     - name: Setup and Install new Active-Directory Domain & Forest
       hosts: dc
       vars:
-        dc_address: 10.242.43.253
+        dhcp_address: "10.242.43.252"
+        dc_address: "10.242.43.253"
+        dc_gateway: "10.242.43.254"
         domain_name: 'starkindustries.marvel.com'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
@@ -12,6 +14,8 @@
             adapter_names: '*'
             ipv4_addresses:
               - '127.0.0.1'
+        - name: Set Default Gateway
+          win_shell: New-NetIPAddress –IPAddress {{dc_address}} -DefaultGateway {{dc_gateway}} -PrefixLength 24 -InterfaceAlias Ethernet 2
         - name: Disable firewall for Domain, Public and Private profiles
           win_firewall:
             state: disabled
@@ -71,16 +75,16 @@
             value: "{{ item.value }}"
             zone: "{{ item.zone }}"
           with_items:
-            - name: "10.242.43.253"
+            - name: "{{dc_address}}"
               type: "PTR"
               value: "dc1"
               zone: "43.242.10.in-addr.arpa"
-            - name: "10.242.43.252"
+            - name: "{{dhcp_address}}"
               type: "PTR"
               value: "dhcp1"
               zone: "43.242.10.in-addr.arpa"
             - name: "dhcp1"
               type: "A"
-              value: "10.242.43.252"
+              value: "{{dhcp_address}}"
               zone: "starkindustries.marvel.com"
             
