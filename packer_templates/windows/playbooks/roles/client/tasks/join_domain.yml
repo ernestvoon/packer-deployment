@@ -3,7 +3,7 @@
       tasks:
         - name: Install and Configure OpenSSH Server
           script: /home/team3user/packer-deployment/packer_templates/windows/scripts/install_openssh.ps1
-        - name: Set internal DNS server 
+        - name: Set internal DNS server
           win_dns_client:
             adapter_names: '*'
             ipv4_addresses:
@@ -15,6 +15,26 @@
             domain_admin_password: QR<cwC6piashc4
             state: domain
           register: domain
+        - name: Include Firewall rule to allow Web Server access
+          win_firewall_rule:
+            name: Web Server
+            localport: any
+            remoteip: 192.168.57.1-192.168.57.254
+            action: allow
+            protocol: any
         - name: Reboot if installing domain joining requires it
           win_reboot:
           when: domain.reboot_required
+        - name: Enable Public Key Authentication for SSH
+          win_lineinfile:
+            path: c:\programdata\ssh
+            regexp: '^(.*)PubkeyAuthentication(.*)$'
+            line: PubkeyAuthentication yes
+            backrefs: yes
+        - name: Enable Password Authentication for SSH
+          win_lineinfile:
+            path: c:\programdata\ssh
+            regexp: '^(.*)PasswordAuthentication(.*)$'
+            line: PasswordAuthentication yes
+            backrefs: yes
+        

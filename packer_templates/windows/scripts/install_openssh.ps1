@@ -30,6 +30,9 @@ Set-Service ssh-agent -StartupType Automatic
 cd "C:\Program Files\OpenSSH\"
 Powershell.exe -ExecutionPolicy Bypass -Command '. .\FixHostFilePermissions.ps1 -Confirm:$false'
 
+cd ~\.ssh\
+ssh-keygen -f id_rsa -t rsa -N '""'
+
 $registryPath = "HKLM:\SOFTWARE\OpenSSH\"
 $Name = "DefaultShell"
 $value = "C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe"

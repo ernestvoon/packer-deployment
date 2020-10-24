@@ -3,8 +3,8 @@
       hosts: dc
       vars:
         dhcp_address: "10.242.43.252"
-        dc_address: "10.242.43.253"
-        dc_gateway: "10.242.43.254"
+        dc_address: 10.242.43.253
+        dc_gateway: 10.242.43.254
         domain_name: 'starkindustries.marvel.com'
         recovery_password: 'SafeModePassw0rd!'
         reverse_dns_zone: "10.242.43.0/24"
@@ -15,7 +15,8 @@
             ipv4_addresses:
               - '127.0.0.1'
         - name: Set Default Gateway
-          win_shell: New-NetIPAddress –IPAddress {{dc_address}} -DefaultGateway {{dc_gateway}} -PrefixLength 24 -InterfaceAlias Ethernet 2
+          win_shell: netsh interface ipv4 set address name="Ethernet 2" static {{dc_address}} 255.255.255.0 {{dc_gateway}}
+          ignore_unreachable: yes
         - name: Disable firewall for Domain, Public and Private profiles
           win_firewall:
             state: disabled

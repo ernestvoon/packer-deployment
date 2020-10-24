@@ -11,7 +11,8 @@
           ipv4_addresses:
             - '10.242.43.253'
       - name: Set Default Gateway
-        win_shell: New-NetIPAddress –IPAddress {{dhcp_address}} -DefaultGateway {{dhcp_gateway}} -PrefixLength 24 -InterfaceAlias Ethernet 2
+        win_shell: win_shell: netsh interface ipv4 set address name="Ethernet 2" static {{dhcp_address}} 255.255.255.0 {{dhcp_gateway}}
+        ignore_unreachable: yes
       - name: Join Domain
         win_domain_membership:
           dns_domain_name: starkindustries.marvel.com
@@ -48,3 +49,4 @@
           Add-DhcpServerv4ExclusionRange -ScopeID 10.242.43.0 -StartRange 10.242.43.240 -EndRange 10.242.43.253
           Set-DhcpServerv4OptionValue -OptionID 3 -Value {{dhcp_gateway}} -ScopeID 10.242.43.0 -ComputerName DHCP1.starkindustries.marvel.com
           Set-DhcpServerv4OptionValue -DnsDomain starkindustries.marvel.com -DnsServer 10.242.43.253
+          Add-DhcpServerv4Filter -List Deny -MacAddress "08-00-27-07-B9-5E" -Description "Web Server"
