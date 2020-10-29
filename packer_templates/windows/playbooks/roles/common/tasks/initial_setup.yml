@@ -40,5 +40,3 @@
       win_shell: "powercfg -Change -monitor-timeout-ac 0"
     - name: Disabling monitor timeout on DC power
       win_shell: "powercfg -Change -monitor-timeout-dc 0"
-    - name: Enable RDP Firewall rule
-      win_shell: 'netsh advfirewall firewall set rule group="Remote Desktop" new enable=Yes'

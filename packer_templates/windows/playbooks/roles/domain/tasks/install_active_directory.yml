@@ -14,6 +14,8 @@
             adapter_names: '*'
             ipv4_addresses:
               - '127.0.0.1'
+        - name: Disable IPv6 Networking
+          win_shell: Disable-NetAdapterBinding –InterfaceAlias “Ethernet 2” –ComponentID ms_tcpip6
         - name: Set Default Gateway
           win_shell: netsh interface ipv4 set address name="Ethernet 2" static {{dc_address}} 255.255.255.0 {{dc_gateway}}
           ignore_unreachable: yes
@@ -63,6 +65,13 @@
                 - Domain Admins
               name: stark
               password: QR<cwC6piashc4
+        - name: Disable firewall for Domain, Public and Private profiles
+          win_firewall:
+            state: enabled
+            profiles:
+              - Domain
+              - Private
+              - Public
         - name: Create reverse DNS zone
           win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"    
           retries: 30

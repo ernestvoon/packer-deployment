@@ -1,1 +1,24 @@
-# packer-deployment
+## packer-deployment
+
+All the scripts for Packer, Ansible and Vagrant that is required for a school module deployment.
+
+DISCLAIMER: The codes are not complete and configuration is different for every enviroment.
+
+## Quickstart
+
+# Packer
+The Packer scripts refers to the json file provided as an input and a quick way to build the image for this lab is to run,
+
+> packer build --only=virtualbox xxx.json
+
+# Ansible
+This repository executes the provisoning scripts from Packer or Vagrant but if you wish to try out the scripts you can execute,
+
+> ansible-playbook xxx.yml
+
+Note that the inventory file of Ansible has to be configured before executing the playbook.
+
+# Vagrant
+The Vagrantfile provided works together with the Packer image built Vagrantfile. For the enviroment to be deployed by Vagrant,
+
+> vagrant up

@@ -36,7 +36,6 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "client" do |client|
-      client.vm.boot_timeout = 1800
       client.vm.box = "windows/win10"
       client.vm.synced_folder ".", "/vagrant", disabled: true
       client.vm.provision "ansible" do |ansible|

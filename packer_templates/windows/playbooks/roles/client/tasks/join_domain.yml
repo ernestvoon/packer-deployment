@@ -27,13 +27,13 @@
           when: domain.reboot_required
         - name: Enable Public Key Authentication for SSH
           win_lineinfile:
-            path: c:\programdata\ssh
+            path: c:\program files\openssh\sshd_config_default
             regexp: '^(.*)PubkeyAuthentication(.*)$'
             line: PubkeyAuthentication yes
             backrefs: yes
         - name: Enable Password Authentication for SSH
           win_lineinfile:
-            path: c:\programdata\ssh
+            path: c:\program files\openssh\sshd_config_default
             regexp: '^(.*)PasswordAuthentication(.*)$'
             line: PasswordAuthentication yes
             backrefs: yes

@@ -10,8 +10,10 @@
           adapter_names: '*'
           ipv4_addresses:
             - '10.242.43.253'
+      - name: Disable IPv6 Networking
+        win_shell: Disable-NetAdapterBinding –InterfaceAlias “Ethernet 2” –ComponentID ms_tcpip6
       - name: Set Default Gateway
-        win_shell: win_shell: netsh interface ipv4 set address name="Ethernet 2" static {{dhcp_address}} 255.255.255.0 {{dhcp_gateway}}
+        win_shell: netsh interface ipv4 set address name="Ethernet 2" static {{dhcp_address}} 255.255.255.0 {{dhcp_gateway}}
         ignore_unreachable: yes
       - name: Join Domain
         win_domain_membership:
@@ -45,8 +47,8 @@
         win_shell: Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
       - name: Setup a DHCP scope
         win_shell: |
+          Add-DhcpServerv4Filter -List Deny -MacAddress "08-00-27-07-B9-5E" -Description "Web Server"
           Add-DhcpServerv4Scope -name "Engineering" -StartRange 10.242.43.1 -EndRange 10.242.43.253 -SubnetMask 255.255.255.0 -State Active
           Add-DhcpServerv4ExclusionRange -ScopeID 10.242.43.0 -StartRange 10.242.43.240 -EndRange 10.242.43.253
           Set-DhcpServerv4OptionValue -OptionID 3 -Value {{dhcp_gateway}} -ScopeID 10.242.43.0 -ComputerName DHCP1.starkindustries.marvel.com
           Set-DhcpServerv4OptionValue -DnsDomain starkindustries.marvel.com -DnsServer 10.242.43.253
-          Add-DhcpServerv4Filter -List Deny -MacAddress "08-00-27-07-B9-5E" -Description "Web Server"
