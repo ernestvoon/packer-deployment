@@ -38,11 +38,21 @@
             dns_domain_name: '{{ domain_name }}'
             safe_mode_password: '{{ recovery_password }}'
           register: ad
+        - name: Install AD Certificate
+          win_feature:
+            name: AD-Certificate
+            state: present
+            include_management_tools: True
+            include_sub_features: True
         - name: Reboot server
           win_reboot:
             msg: "Installing AD. Rebooting..."
             pre_reboot_delay: 15
           when: ad.changed
+        - name: Create and configure a Standalone root CA
+          win_shell: Install-AdcsCertificationAuthority -CAType StandaloneRootCa "ECDSA_P256#Microsoft Software Key Storage Provider" -KeyLength 256 -HashAlgorithmName SHA256 -ValidityPeriod Years -ValidityPeriodUnits 99
+        - name: Creation of Service Principal Name (SPN)
+          win_shell: setspn -a DC1/SQLService.starkindustries.marvel.com:12345 starkindustries\SQLService
         - name: Domain Account Creation
           win_domain_user:
             surname: "{{ item.surname }}"
@@ -65,6 +75,14 @@
                 - Domain Admins
               name: stark
               password: QR<cwC6piashc4
+            - surname: Service
+              firstname: SQL
+              groups:
+                - Administrators
+              name: SQLService
+              password: P@ssw0rd!
+              password_never_expires: yes
+              description: Use P@ssw0rd! to access this service account!
         - name: Disable firewall for Domain, Public and Private profiles
           win_firewall:
             state: enabled

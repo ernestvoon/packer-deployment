@@ -1,8 +1,10 @@
 ## packer-deployment
 
+This project deploys a Windows enviroment including a Windows DC, a Windows DHCP and a Windows 10 client.
+
 All the scripts for Packer, Ansible and Vagrant that is required for a school module deployment.
 
-DISCLAIMER: The codes are not complete and configuration is different for every enviroment.
+DISCLAIMER: The codes are not complete and configuration is different for every enviroment. This may not work on your enviroment you deploy on, remember to configure it to suit your enviroment needs.
 
 ## Quickstart
 
