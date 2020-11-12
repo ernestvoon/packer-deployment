@@ -1,4 +1,4 @@
-## packer-deployment
+# packer-deployment
 
 This project deploys a Windows enviroment including a Windows DC, a Windows DHCP and a Windows 10 client.
 
@@ -6,23 +6,23 @@ All the scripts for Packer, Ansible and Vagrant that is required for a school mo
 
 DISCLAIMER: The codes are not complete and configuration is different for every enviroment. This may not work on your enviroment you deploy on, remember to configure it to suit your enviroment needs.
 
-## Quickstart
+# Quickstart
 
-# Packer
+## Packer
 The Packer scripts refers to the json file provided as an input and a quick way to build the image for this lab is to run,
 
 > packer build --only=virtualbox-iso xxx.json
 
 *The project is currently not compatible with any other hypervisors other than VirtualBox.*
 
-# Ansible
+## Ansible
 This repository executes the provisoning scripts from Packer or Vagrant but if you wish to try out the scripts you can execute,
 
 > ansible-playbook xxx.yml
 
 *Note that the inventory file of Ansible has to be configured before executing the playbook.*
 
-# Vagrant
+## Vagrant
 The Vagrantfile provided works together with the Packer image built Vagrantfile. For the enviroment to be deployed by Vagrant,
 
 > vagrant up
