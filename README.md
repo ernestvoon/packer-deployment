@@ -20,7 +20,7 @@ This repository executes the provisoning scripts from Packer or Vagrant but if y
 
 > ansible-playbook xxx.yml
 
-Note that the inventory file of Ansible has to be configured before executing the playbook.
+*Note that the inventory file of Ansible has to be configured before executing the playbook.*
 
 # Vagrant
 The Vagrantfile provided works together with the Packer image built Vagrantfile. For the enviroment to be deployed by Vagrant,
