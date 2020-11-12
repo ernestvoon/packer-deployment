@@ -11,7 +11,9 @@ DISCLAIMER: The codes are not complete and configuration is different for every 
 # Packer
 The Packer scripts refers to the json file provided as an input and a quick way to build the image for this lab is to run,
 
-> packer build --only=virtualbox xxx.json
+> packer build --only=virtualbox-iso xxx.json
+
+*The project is currently not compatible with any other hypervisors other than VirtualBox.*
 
 # Ansible
 This repository executes the provisoning scripts from Packer or Vagrant but if you wish to try out the scripts you can execute,
@@ -24,3 +26,5 @@ Note that the inventory file of Ansible has to be configured before executing th
 The Vagrantfile provided works together with the Packer image built Vagrantfile. For the enviroment to be deployed by Vagrant,
 
 > vagrant up
+
+*The Windows client will be unresponsive after booting up as the connection will be disconnected due to unreachable host. Manually execute the playbook or execute vagrant up after the boot has timeout.*
